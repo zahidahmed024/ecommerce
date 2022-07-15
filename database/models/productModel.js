@@ -13,18 +13,22 @@ const productSchema = new mongoose.Schema({
     brand: String,
     description: String,
     sizes: [sizeSchema],
-    files: [images]
-}, {
-    timestamps: true,
-    toObject: {
-        transform: function (doc, ret, options) {
-            ret.id = ret._id
-            delete ret._id
-            return ret
+    images: [images],
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true
+    }
+},
+    {
+        statics: {
+            fetchProducts(name) {
+                return this.find({}).populate({ path: 'category' }).exec()
+            }
         }
     }
-})
+)
 
 
 
-module.exports = mongoose.model("Products", productSchema)
+module.exports = mongoose.model("Product", productSchema)

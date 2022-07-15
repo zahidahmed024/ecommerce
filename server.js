@@ -24,6 +24,7 @@ app.get('/', (req, res, next) => {
   res.send('hallo from backend')
 })
 app.use('/api/v1/product', require('./routes/productRoutes'))
+app.use('/api/v1/category', require('./routes/categoryRoutes'))
 
 app.listen(PORT, () => {
   console.log(`server started at ${PORT}`)
